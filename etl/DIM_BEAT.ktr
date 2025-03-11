@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>IUCR</name>
+    <name>BEAT_dim</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
     </parameters>
@@ -489,6 +490,16 @@
   <order>
     <hop>
       <from>CSV file input</from>
+      <to>Sort rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort rows</from>
+      <to>Unique rows (HashSet)</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Unique rows (HashSet)</from>
       <to>Table output</to>
       <enabled>Y</enabled>
     </hop>
@@ -504,7 +515,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>D:\artga\Documentos\Trabalho DW\Chicago_Police_Department_-_Illinois_Uniform_Crime_Reporting__IUCR__Codes_20250215.csv</filename>
+    <filename>D:/artga/Documentos/Trabalho DW/PoliceBeatDec2012_20250228.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -520,58 +531,58 @@
     <encoding/>
     <fields>
       <field>
-        <name>IUCR</name>
+        <name>the_geom</name>
         <type>String</type>
         <format/>
-        <currency/>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>45115</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>PRIMARY DESCRIPTION</name>
-        <type>String</type>
-        <format/>
-        <currency/>
+        <name>DISTRICT</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>33</length>
-        <precision>-1</precision>
+        <length>15</length>
+        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>SECONDARY DESCRIPTION</name>
-        <type>String</type>
-        <format/>
-        <currency/>
+        <name>SECTOR</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>60</length>
-        <precision>-1</precision>
+        <length>15</length>
+        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>INDEX CODE</name>
-        <type>String</type>
-        <format/>
-        <currency/>
+        <name>BEAT</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>1</length>
-        <precision>-1</precision>
+        <length>15</length>
+        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>ACTIVE</name>
-        <type>Boolean</type>
-        <format/>
-        <currency/>
+        <name>BEAT_NUM</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
+        <length>15</length>
+        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
     </fields>
@@ -602,7 +613,7 @@
     </partitioning>
     <connection>POSTGRES</connection>
     <schema>public</schema>
-    <table>DIM_IUCR</table>
+    <table>dim_beat</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
@@ -619,24 +630,24 @@
     <return_field/>
     <fields>
       <field>
-        <column_name>IUCR</column_name>
-        <stream_name>IUCR</stream_name>
+        <column_name>BEAT_NUM</column_name>
+        <stream_name>BEAT_NUM</stream_name>
       </field>
       <field>
-        <column_name>PRIMARY DESCRIPTION</column_name>
-        <stream_name>PRIMARY DESCRIPTION</stream_name>
+        <column_name>DISTRICT</column_name>
+        <stream_name>DISTRICT</stream_name>
       </field>
       <field>
-        <column_name>SECONDARY DESCRIPTION</column_name>
-        <stream_name>SECONDARY DESCRIPTION</stream_name>
+        <column_name>MULTIPOLYGON</column_name>
+        <stream_name>the_geom</stream_name>
       </field>
       <field>
-        <column_name>INDEX CODE</column_name>
-        <stream_name>INDEX CODE</stream_name>
+        <column_name>SECTOR</column_name>
+        <stream_name>SECTOR</stream_name>
       </field>
       <field>
-        <column_name>ACTIVE</column_name>
-        <stream_name>ACTIVE</stream_name>
+        <column_name>BEAT</column_name>
+        <stream_name>BEAT</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -648,7 +659,82 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>544</xloc>
+      <xloc>528</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>BEAT_NUM</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>304</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Unique rows (HashSet)</name>
+    <type>UniqueRowsByHashSet</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <store_values>N</store_values>
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description/>
+    <fields>
+      <field>
+        <name>BEAT_NUM</name>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>416</xloc>
       <yloc>352</yloc>
       <draw>Y</draw>
     </GUI>
