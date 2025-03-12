@@ -1,0 +1,9 @@
+CREATE TABLE DIM_ARREST (
+    id SERIAL PRIMARY KEY,
+    arrested BOOLEAN NOT NULL
+);
+
+INSERT INTO DIM_ARREST (arrested) VALUES 
+    (TRUE), 
+    (FALSE);
+
