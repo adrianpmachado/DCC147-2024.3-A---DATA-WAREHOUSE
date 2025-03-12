@@ -1,0 +1,9 @@
+CREATE TABLE DIM_DOMESTIC (
+    id SERIAL PRIMARY KEY,
+    domestic BOOLEAN NOT NULL
+);
+
+INSERT INTO DIM_DOMESTIC (arrested) VALUES 
+    (TRUE), 
+    (FALSE);
+
