@@ -11,7 +11,7 @@ O projeto segue a arquitetura Kimball e está estruturado nas seguintes etapas:
 1. Carga dos dados do Sistema
 2. Criação e Carga do Modelo Dimensional
 3. Criação do CUBO
-4. Criação de Relatórios com o Pentaho
+4. Criação de Relatórios com Powerbi
     - Relatórios Estáticos
     - Relatórios Dinâmicos
 5. Criação de dashboards
@@ -19,12 +19,7 @@ O projeto segue a arquitetura Kimball e está estruturado nas seguintes etapas:
 ## Tecnologias Utilizadas
 
 - Pentaho Data Integration (PDI) para ETL
-- Schema Workbench para criação de cubos OLAP
-- Pentaho BI Server para hospedagem e acesso aos dados
-- Pentaho Report Designer para relatórios estáticos
-- Saiku Analytics para relatórios dinâmicos
-- Pentaho Dashboard Designer para criação de dashboards
-
+- Powerbi
 
 ## Como Executar
 
@@ -49,7 +44,7 @@ O projeto segue a arquitetura Kimball e está estruturado nas seguintes etapas:
 
 ## Data de Entrega
 
-17/03/2025
+13/03/2025
 
 ## Link para download da base
 https://catalog.data.gov/dataset/crimes-2001-to-present
