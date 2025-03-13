@@ -444,7 +444,7 @@
     <database>postgres</database>
     <port>5432</port>
     <username>postgres</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79ce108fc0fc8e</password>
+    <password>Encrypted 2be98afc86aa7f2e4cb79fc258fcbfe8b</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -535,7 +535,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>D:\artga\Documentos\DCC147-2024.3-A---DATA-WAREHOUSE\dados\Crimes_-_2001_to_Present.csv</filename>
+    <filename>C:\temp\DCC147-2024.3-A---DATA-WAREHOUSE\dados\Crimes_-_2001_to_Present_20250306.csv</filename>
     <filename_field/>
     <rownum_field>ID</rownum_field>
     <include_filename>N</include_filename>
@@ -575,7 +575,7 @@
       <field>
         <name>Date</name>
         <type>String</type>
-        <format/>
+        <format>MM/dd/yyyy HH:mm:ss</format>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -802,8 +802,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>32</xloc>
-      <yloc>240</yloc>
+      <xloc>144</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -821,7 +821,7 @@
     <connection>POSTGRES</connection>
     <schema>public</schema>
     <table>FACT_CRIMES</table>
-    <commit>100000</commit>
+    <commit>1000000</commit>
     <truncate>Y</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>
@@ -845,36 +845,40 @@
         <stream_name>Date</stream_name>
       </field>
       <field>
-        <column_name>id_description</column_name>
-        <stream_name>id_description</stream_name>
+        <column_name>id_arrest</column_name>
+        <stream_name>id_arrest</stream_name>
       </field>
       <field>
         <column_name>id_beat</column_name>
         <stream_name>Beat</stream_name>
       </field>
       <field>
+        <column_name>id_block</column_name>
+        <stream_name>id_block</stream_name>
+      </field>
+      <field>
+        <column_name>id_description</column_name>
+        <stream_name>id_description</stream_name>
+      </field>
+      <field>
         <column_name>id_district</column_name>
         <stream_name>District</stream_name>
-      </field>
-      <field>
-        <column_name>id_iucr</column_name>
-        <stream_name>IUCR</stream_name>
-      </field>
-      <field>
-        <column_name>id_arrest</column_name>
-        <stream_name>id_arrest</stream_name>
       </field>
       <field>
         <column_name>id_domestic</column_name>
         <stream_name>id_domestic</stream_name>
       </field>
       <field>
-        <column_name>id_block</column_name>
-        <stream_name>id_block</stream_name>
+        <column_name>id_iucr</column_name>
+        <stream_name>IUCR</stream_name>
       </field>
       <field>
         <column_name>id_location</column_name>
         <stream_name>id_location</stream_name>
+      </field>
+      <field>
+        <column_name>id_location_description</column_name>
+        <stream_name>id_location_description</stream_name>
       </field>
     </fields>
     <attributes/>
@@ -886,8 +890,56 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>992</xloc>
-      <yloc>240</yloc>
+      <xloc>1040</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>dim_arrest</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>8</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>POSTGRES</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>public</schema>
+      <table>dim_arrest</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>Arrest</name>
+        <field>arrested</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id</name>
+        <rename>id_arrest</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>688</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -922,7 +974,7 @@
         <name>id_block</name>
         <rename>id_block</rename>
         <default/>
-        <type>None</type>
+        <type>Integer</type>
       </value>
     </lookup>
     <attributes/>
@@ -934,8 +986,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>192</xloc>
-      <yloc>240</yloc>
+      <xloc>272</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -945,7 +997,7 @@
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
-    <copies>4</copies>
+    <copies>8</copies>
     <partitioning>
       <method>none</method>
       <schema_name/>
@@ -970,7 +1022,7 @@
         <name>id_description</name>
         <rename>id_description</rename>
         <default/>
-        <type>None</type>
+        <type>Integer</type>
       </value>
     </lookup>
     <attributes/>
@@ -982,8 +1034,104 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>352</xloc>
-      <yloc>240</yloc>
+      <xloc>416</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>dim_domestic</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>8</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>POSTGRES</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>public</schema>
+      <table>dim_domestic</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>Domestic</name>
+        <field>domestic</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id</name>
+        <rename>id_domestic</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>800</xloc>
+      <yloc>256</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>dim_local_description</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>8</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>POSTGRES</connection>
+    <cache>Y</cache>
+    <cache_load_all>Y</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>public</schema>
+      <table>dim_local_description</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>Location Description</name>
+        <field>Location Description</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>id_description</name>
+        <rename>id_location_description</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>912</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1024,54 +1172,6 @@
         <name>id_location</name>
         <rename>id_location</rename>
         <default/>
-        <type>None</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>464</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>dim_arrest</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>4</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>POSTGRES</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_arrest</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>Arrest</name>
-        <field>arrested</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>id</name>
-        <rename>id_arrest</rename>
-        <default/>
         <type>Integer</type>
       </value>
     </lookup>
@@ -1084,104 +1184,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>dim_domestic</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>4</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>POSTGRES</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_domestic</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>Domestic</name>
-        <field>domestic</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>id</name>
-        <rename>id_domestic</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>688</xloc>
-      <yloc>240</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>dim_local_description</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>4</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>POSTGRES</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>public</schema>
-      <table>dim_local_description</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>Location Description</name>
-        <field>Location Description</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>id_description</name>
-        <rename>id_description</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>800</xloc>
-      <yloc>240</yloc>
+      <xloc>544</xloc>
+      <yloc>256</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
